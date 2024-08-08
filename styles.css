@@ -1,0 +1,51 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+}
+
+#background {
+    position: absolute;
+    width: 100%;
+    height: calc(300vh); /* 3 fois la hauteur de la fenêtre */
+    background: url('background.png') no-repeat center top;
+    background-size: cover;
+}
+
+#balloon {
+    width: 100px;
+    height: 150px;
+    background: url('ddd.png') no-repeat center/contain;
+    position: absolute;
+    bottom: 0; /* Assure que la montgolfière commence en bas */
+    left: 50%;
+    transform: translateX(-50%);
+    transition: bottom 1s ease-in-out, transform 2s ease-in-out;
+}
+
+#altitude {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    font-size: 20px;
+    color: white;
+    z-index: 10;
+}
+
+@keyframes sway {
+    0% { transform: translateX(-50%) rotate(0deg); }
+    25% { transform: translateX(-50%) rotate(5deg); }
+    50% { transform: translateX(-50%) rotate(0deg); }
+    75% { transform: translateX(-50%) rotate(-5deg); }
+    100% { transform: translateX(-50%) rotate(0deg); }
+}
+
+.sway-slow {
+    animation: sway-slow 3s infinite alternate ease-in-out;
+}
+
+@keyframes sway-slow {
+    0% { transform: translateX(-50%) rotate(-2deg); }
+    100% { transform: translateX(-50%) rotate(2deg); }
+}

@@ -12,13 +12,16 @@
     overflow: hidden; /* Assurez-vous que le défilement est contrôlé par JavaScript */
 }
 
-#background {
-    position: absolute;
-    width: 100%;
-    height: 300vh; /* Assurez-vous que cette hauteur est suffisante pour permettre le défilement */
-    background: url('background.png') no-repeat center top;
-    background-size: cover;
+
+body {
+    background-image: url('fondtest.png');
+    background-size: cover; /* Ajuste l'image pour couvrir tout l'écran */
+    background-position: center; /* Centre l'image */
+    background-repeat: no-repeat; /* Évite la répétition de l'image */
+    background-attachment: fixed; /* Fixe l'image de fond lors du défilement (optionnel) */
 }
+
+
 
 #balloon {
     width: 1600px;

@@ -1,6 +1,46 @@
 let altitude = 0;
 let isRising = false;
 let swayInterval;
+let fetchInterval; // Ajout d'une variable pour gérer l'intervalle de récupération des données
+
+// Fonction pour obtenir le jeton d'accès de l'API PayPal
+async function getAccessToken(clientId, clientSecret) {
+    const auth = btoa(`${clientId}:${clientSecret}`);
+    
+    const response = await fetch('https://api.sandbox.paypal.com/v1/oauth2/token', {
+        method: 'POST',
+        headers: {
+            'Authorization': `Basic ${auth}`,
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: 'grant_type=client_credentials'
+    });
+    
+    if (!response.ok) {
+        throw new Error('Failed to obtain access token');
+    }
+    
+    const data = await response.json();
+    return data.access_token;
+}
+
+// Fonction pour récupérer le solde du compte PayPal
+async function getAccountBalance(accessToken) {
+    const response = await fetch('https://api.sandbox.paypal.com/v1/reporting/balances', {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${accessToken}`,
+            'Content-Type': 'application/json'
+        }
+    });
+
+    if (!response.ok) {
+        throw new Error('Failed to fetch account balance');
+    }
+
+    const data = await response.json();
+    return data.balances[0].available_balance.value; // Assurez-vous de vérifier la structure de la réponse
+}
 
 function startRandomSway() {
     const balloon = document.getElementById('balloon');
@@ -20,13 +60,25 @@ function startRandomSway() {
     sway();
 }
 
-function fetchData() {
+async function fetchData() {
     const simulatedApiResponse = Math.floor(Math.random() * 100) + 1;
     updateBalloon(simulatedApiResponse);
 }
 
+function startFetchingDataInterval() {
+    // Appeler fetchData immédiatement au démarrage
+    fetchData();
+
+    // Mettre en place l'intervalle pour récupérer les données toutes les 5 minutes (300000 ms)
+    fetchInterval = setInterval(fetchData, 300000);
+}
+
 function stopSway() {
     clearTimeout(swayInterval);
+}
+
+function stopFetchingDataInterval() {
+    clearInterval(fetchInterval);
 }
 
 function updateBalloon(newValue) {
@@ -68,6 +120,7 @@ function scrollToBottom() {
         behavior: 'instant' // Utilisation de 'instant' pour éviter les problèmes de défilement
     });
 }
+
 function resetBalloonPosition() {
     const balloon = document.getElementById('balloon');
     
@@ -97,4 +150,5 @@ window.onload = function() {
     // S'assurer que la montgolfière est en bas après le chargement complet
     resetBalloonPosition(); // Réinitialiser la position de la montgolfière
     startRandomSway(); // Démarre le tangage aléatoire
+    startFetchingDataInterval(); // Commencer la récupération des données à intervalles réguliers
 };

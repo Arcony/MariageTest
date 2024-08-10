@@ -6,9 +6,12 @@
     <title>Montgolfière Animée</title>
     <style>
 
+body, html  {
+    overflow: hidden;
+}
 
 #balloon {
-    width: 1600px;
+    width: 1366px;
     height: 800px;
     background: url('house.png') no-repeat center/contain;
     position: absolute;
@@ -18,7 +21,12 @@
     transition: bottom 1s ease-in-out, transform 2s ease-in-out;
 }
 
+.background-container {
+overflow: hidden;
+}
 .background-container video {
+    overflow: hidden;
+    
             position: absolute;
             top: 50%;
             left: 50%;
@@ -26,6 +34,7 @@
             height: 200%;
             transform: translate(-50%, -50%); /* Centre la vidéo */
             z-index: -1; /* Assure que la vidéo est en arrière-plan */
+            overflow: hidden;
         }
 
         #altitude {

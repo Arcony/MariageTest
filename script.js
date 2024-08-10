@@ -93,11 +93,11 @@ function updateBalloon(newValue) {
     const randomX = Math.random() * 10 - 5;
 
     balloon.style.transition = `bottom 1s ease-in-out, transform 0.5s ease-in-out`;
-    balloon.style.bottom = `${altitude - 1850}px`;
+    balloon.style.bottom = `${altitude - 2200}px`;
     balloon.style.transform = `translateX(${randomX}px) rotate(${randomTilt}deg)`;
 
     // Calcul du défilement pour suivre la montgolfière
-    const scrollY = Math.max(0, 1850 - (altitude - (innerHeight / 2)));
+    const scrollY = Math.max(0, 2200 - (altitude - (innerHeight / 2)));
     window.scrollTo({
         top: scrollY,
         behavior: 'smooth' // Utilisation de 'smooth' pour un défilement fluide
@@ -141,7 +141,7 @@ function resetBalloonPosition() {
 
         // Déplacer la montgolfière en bas de la fenêtre et réactiver les transitions
         balloon.style.transition = 'bottom 1s ease-in-out, transform 2s ease-in-out';
-        balloon.style.bottom = '-1850px';
+        balloon.style.bottom = 2200;
         altitude = 0;
     }, 100); // Délai pour s'assurer que le style est appliqué
 }

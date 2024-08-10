@@ -61,7 +61,7 @@ function startRandomSway() {
 }
 
 async function fetchData() {
-    const simulatedApiResponse = Math.floor(Math.random() * 100) + 1;
+     const simulatedApiResponse = Math.floor(Math.random() * 100) + 1;
     updateBalloon(simulatedApiResponse);
 }
 

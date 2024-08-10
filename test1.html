@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Montgolfière Animée</title>
+    <style>
+
+
+#balloon {
+    width: 1600px;
+    height: 800px;
+    background: url('house.png') no-repeat center/contain;
+    position: absolute;
+    bottom: 0; /* Assure que la montgolfière commence en bas */
+    left: 0%;
+    transform: translateX(-0%);
+    transition: bottom 1s ease-in-out, transform 2s ease-in-out;
+}
+
+.background-container video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 200%;
+            height: 200%;
+            transform: translate(-50%, -50%); /* Centre la vidéo */
+            z-index: -1; /* Assure que la vidéo est en arrière-plan */
+        }
+
+        #altitude {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            font-size: 20px;
+            color: white;
+            z-index: 10;
+        }
+
+        @keyframes sway {
+            0% { transform: translateX(-50%) rotate(75deg); }
+            25% { transform: translateX(-50%) rotate(-50deg); }
+            50% { transform: translateX(-50%) rotate(15deg); }
+            75% { transform: translateX(-50%) rotate(-10deg); }
+            100% { transform: translateX(-50%) rotate(50deg); }
+        }
+
+        .sway-slow {
+            animation: sway-slow 3s infinite alternate ease-in-out;
+        }
+
+        @keyframes sway-slow {
+            0% { transform: translateX(-50%) rotate(-90deg); }
+            100% { transform: translateX(-50%) rotate(90deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="background-container">
+        <div class="video-container">
+            <video src="looparbre_aut.mp4" autoplay loop muted></video>
+        </div>
+    </div>
+    <div  onclick="fetchData()" id="balloon"></div>
+    <div id="altitude">Altitude: 0</div>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -65,6 +65,39 @@ async function fetchData() {
     updateBalloon(simulatedApiResponse);
 }
 
+async function fetchData2() {
+    console.log("test")
+    const spreadsheetId = '1q61_ZkAFCXc-XoBRyeT45KX_O-YzYKDo4u0BucxEjgI'; // Remplacez par votre ID de feuille Google Sheets
+    const range = 'Data!A1'; // Remplacez 'Sheet1' par le nom de votre feuille si nécessaire
+    const apiKey = 'AIzaSyDnGwknWZf4Hio5X_oSBPbnTII7bJ_FxYQ'; // Remplacez par votre clé API Google
+
+    const url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}?key=${apiKey}`;
+
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error('Failed to fetch data from Google Sheets');
+        }
+
+        const data = await response.json();
+        const cellValue = parseInt(data.values[0][0], 10); // Supposant que la valeur est un nombre entier
+
+        if (!isNaN(cellValue)) {
+            updateBalloon(cellValue); // Utilise la valeur de A1 pour mettre à jour la montgolfière
+        } else {
+            console.error('La valeur dans A1 n\'est pas un nombre');
+        }
+    } catch (error) {
+        console.error('Erreur lors de la récupération des données:', error);
+    }
+}
+
+function startFetchingDataInterval() {
+    fetchData2(); // Utiliser fetchData2 au lieu de fetchData
+
+    fetchInterval = setInterval(fetchData2, 250); // Appeler fetchData2 toutes les 5 minutes
+}
+
 function startFetchingDataInterval() {
     // Appeler fetchData immédiatement au démarrage
     fetchData();
